@@ -2,26 +2,175 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import url('https://fonts.googleapis.com/css2?family=Macondo&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --primary: #3B82F6;
+  --secondary: #8B5CF6;
+  --success: #16A34A;
+  --warning: #D97706;
+  --danger: #DC2626;
+  --surface: #FFFFFF;
+  --text: #111827;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: #FFF8E7;
+  font-family: 'Macondo', cursive;
+  background-image:
+    radial-gradient(circle at 20px 20px, rgba(139,69,19,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* ═══════════════════════════════════════════════
+   RETRO PANEL SYSTEM
+   Vintage card with thick borders and hard shadows
+   ═══════════════════════════════════════════════ */
+@layer components {
+  .retro-panel {
+    @apply bg-surface border-3 border-text rounded-none;
+    box-shadow: 4px 4px 0px 0px #111827;
   }
+
+  .retro-panel-header {
+    @apply flex items-center justify-between
+           px-4 py-2 border-b-3 border-text
+           font-display text-lg tracking-wide;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 4px,
+      rgba(59, 130, 246, 0.06) 4px,
+      rgba(59, 130, 246, 0.06) 8px
+    );
+  }
+
+  .retro-panel-body {
+    @apply p-4;
+  }
+
+  /* Badge / chip */
+  .retro-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1
+           font-display text-sm font-bold tracking-wide
+           border-2 border-text;
+    box-shadow: 2px 2px 0px 0px #111827;
+  }
+
+  .retro-badge-primary {
+    @apply bg-primary text-surface;
+  }
+
+  .retro-badge-success {
+    @apply bg-success text-surface;
+  }
+
+  .retro-badge-warning {
+    @apply bg-warning text-surface;
+  }
+
+  .retro-badge-danger {
+    @apply bg-danger text-surface;
+  }
+
+  /* Gauge track */
+  .retro-gauge-track {
+    @apply h-5 bg-cream border-2 border-text overflow-hidden;
+    box-shadow: inset 2px 2px 0px 0px rgba(0,0,0,0.08);
+  }
+
+  .retro-gauge-fill {
+    @apply h-full transition-all duration-500 ease-out;
+  }
+
+  /* Data values */
+  .retro-value {
+    @apply font-mono text-2xl font-bold tabular-nums;
+  }
+
+  .retro-label {
+    @apply font-display text-sm text-text/60 tracking-wide;
+  }
+
+  .retro-label-sm {
+    @apply font-display text-xs text-text/50 tracking-wide;
+  }
+
+  /* Status indicator */
+  .retro-dot {
+    @apply w-3 h-3 rounded-full border-2 border-text;
+  }
+
+  .retro-dot-ok {
+    @apply bg-success;
+  }
+
+  .retro-dot-err {
+    @apply bg-danger animate-blink;
+  }
+
+  /* Button */
+  .retro-btn {
+    @apply font-display text-sm font-bold tracking-wide
+           px-4 py-2 border-3 border-text bg-surface
+           cursor-pointer select-none
+           active:translate-x-0.5 active:translate-y-0.5
+           active:shadow-none transition-all;
+    box-shadow: 3px 3px 0px 0px #111827;
+  }
+
+  .retro-btn:hover {
+    @apply bg-cream;
+  }
+
+  .retro-btn-primary {
+    @apply bg-primary text-surface;
+  }
+
+  .retro-btn-primary:hover {
+    @apply bg-primary/90;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   VINTAGE DECORATIONS
+   ═══════════════════════════════════════════════ */
+
+/* Dashed separator with vintage flair */
+.retro-divider {
+  border: none;
+  border-top: 2px dashed #111827;
+  opacity: 0.2;
+  margin: 16px 0;
+}
+
+/* Vintage dot-matrix text effect for numeric data */
+.dot-matrix {
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+}
+
+/* Scrollbar - keep it chunky and retro */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFF8E7;
+  border-left: 2px solid #111827;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #111827;
+  border: 2px solid #FFF8E7;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3B82F6;
+}
+
+/* Override Leaflet popups to match retro style */
+.leaflet-container {
+  font-family: 'Macondo', cursive !important;
 }
