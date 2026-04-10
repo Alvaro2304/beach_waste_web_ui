@@ -42,14 +42,14 @@ export default function MapPanel() {
       const robotIcon = L.divIcon({
         className: "robot-marker",
         html: `<div style="
-          width: 18px; height: 18px;
-          background: #3B82F6;
-          border: 3px solid #111827;
+          width: 14px; height: 14px;
+          background: #4A4A4A;
+          border: 3px solid #FFFFFF;
           border-radius: 50%;
-          box-shadow: 0 0 0 3px rgba(59,130,246,0.4);
+          box-shadow: 0 1px 4px rgba(0,0,0,0.2);
         "></div>`,
-        iconSize: [18, 18],
-        iconAnchor: [9, 9],
+        iconSize: [14, 14],
+        iconAnchor: [7, 7],
       });
 
       markerRef.current = L.marker([gpsInitLat.current, gpsInitLng.current], {
@@ -57,10 +57,10 @@ export default function MapPanel() {
       }).addTo(map);
 
       trailRef.current = L.polyline([], {
-        color: "#DC2626",
-        weight: 3,
-        opacity: 0.8,
-        dashArray: "8, 6",
+        color: "#8B7355",
+        weight: 2,
+        opacity: 0.5,
+        dashArray: "6, 4",
       }).addTo(map);
 
       leafletMap.current = map;
@@ -87,10 +87,10 @@ export default function MapPanel() {
   }, [gps, gpsHistory, mapReady]);
 
   return (
-    <div className="retro-panel h-full min-h-[250px] flex flex-col">
-      <div className="retro-panel-header">
-        <span>Map — GPS Track</span>
-        <span className="font-mono text-xs text-text/50">
+    <div className="ae-panel h-full min-h-[250px] flex flex-col overflow-hidden">
+      <div className="ae-panel-header">
+        <span className="ae-panel-header-title">GPS Track</span>
+        <span className="ae-panel-header-sub">
           {gps.latitude.toFixed(5)}, {gps.longitude.toFixed(5)}
         </span>
       </div>
@@ -100,10 +100,8 @@ export default function MapPanel() {
           href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         />
         <div ref={mapContainerRef} className="w-full h-full" />
-        <div className="absolute bottom-2 right-2 z-[1000] bg-surface border-2 border-text/20 px-2 py-1">
-          <span className="font-display text-xs text-warning font-bold">
-            ALT {gps.altitude.toFixed(1)}m
-          </span>
+        <div className="absolute bottom-3 right-3 z-[1000] ae-badge ae-badge-neutral backdrop-blur-sm">
+          Alt {gps.altitude.toFixed(1)}m
         </div>
       </div>
     </div>

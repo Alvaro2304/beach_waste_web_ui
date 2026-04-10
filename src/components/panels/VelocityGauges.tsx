@@ -2,108 +2,84 @@
 
 import { useRos } from "@/contexts/RosContext";
 
-function VintageGauge({
+function MinimalGauge({
   label,
   value,
   max,
   unit,
-  color,
-  bgColor,
 }: {
   label: string;
   value: number;
   max: number;
   unit: string;
-  color: string;
-  bgColor: string;
 }) {
-  const percentage = Math.min(Math.abs(value) / max, 1);
-  const displayValue = value.toFixed(2);
-
-  // Needle angle: -90deg (min) to +90deg (max)
-  const needleAngle = -90 + percentage * 180;
+  const pct = Math.min(Math.abs(value) / max, 1);
+  const needleAngle = -90 + pct * 180;
 
   return (
-    <div className="flex flex-col items-center gap-2">
-      <span className="retro-label font-bold">{label}</span>
+    <div className="flex flex-col items-center gap-3">
+      <span className="ae-label">{label}</span>
 
-      {/* Vintage analog gauge */}
-      <div className="relative w-[140px] h-[80px]">
-        <svg viewBox="0 0 140 85" className="w-full h-full">
-          {/* Gauge background */}
+      {/* Minimal arc gauge */}
+      <div className="relative w-[130px] h-[75px]">
+        <svg viewBox="0 0 130 80" className="w-full h-full">
+          {/* Background arc */}
           <path
-            d="M 10 75 A 60 60 0 0 1 130 75"
-            fill={bgColor}
-            stroke="#111827"
-            strokeWidth="3"
-          />
-
-          {/* Colored zone segments */}
-          <path
-            d="M 10 75 A 60 60 0 0 1 40 22"
+            d="M 10 70 A 55 55 0 0 1 120 70"
             fill="none"
-            stroke="#16A34A"
+            stroke="#E8E5E0"
             strokeWidth="6"
-            strokeLinecap="butt"
-            opacity="0.6"
+            strokeLinecap="round"
           />
+          {/* Value arc */}
           <path
-            d="M 40 22 A 60 60 0 0 1 100 22"
+            d="M 10 70 A 55 55 0 0 1 120 70"
             fill="none"
-            stroke="#D97706"
+            stroke="#4A4A4A"
             strokeWidth="6"
-            strokeLinecap="butt"
-            opacity="0.6"
-          />
-          <path
-            d="M 100 22 A 60 60 0 0 1 130 75"
-            fill="none"
-            stroke="#DC2626"
-            strokeWidth="6"
-            strokeLinecap="butt"
-            opacity="0.6"
+            strokeLinecap="round"
+            strokeDasharray={`${pct * 173} 173`}
+            className="transition-all duration-500"
           />
 
-          {/* Tick marks */}
-          {Array.from({ length: 11 }, (_, i) => {
-            const angle = Math.PI + (i / 10) * Math.PI;
-            const x1 = 70 + Math.cos(angle) * 52;
-            const y1 = 75 + Math.sin(angle) * 52;
-            const x2 = 70 + Math.cos(angle) * 58;
-            const y2 = 75 + Math.sin(angle) * 58;
+          {/* Tick marks — just 0 and max */}
+          {[0, 0.5, 1].map((t) => {
+            const angle = Math.PI + t * Math.PI;
+            const x1 = 65 + Math.cos(angle) * 48;
+            const y1 = 70 + Math.sin(angle) * 48;
+            const x2 = 65 + Math.cos(angle) * 53;
+            const y2 = 70 + Math.sin(angle) * 53;
             return (
               <line
-                key={i}
+                key={t}
                 x1={x1} y1={y1} x2={x2} y2={y2}
-                stroke="#111827"
-                strokeWidth={i % 5 === 0 ? "2" : "1"}
+                stroke="#D1CCC4"
+                strokeWidth="1.5"
               />
             );
           })}
 
           {/* Needle */}
-          <g transform={`rotate(${needleAngle}, 70, 75)`}>
+          <g transform={`rotate(${needleAngle}, 65, 70)`}>
             <line
-              x1="70" y1="75" x2="70" y2="22"
-              stroke={color}
-              strokeWidth="3"
+              x1="65" y1="70" x2="65" y2="24"
+              stroke="#B85C5C"
+              strokeWidth="2"
               strokeLinecap="round"
-              className="transition-all duration-300"
+              className="transition-all duration-500"
             />
           </g>
 
           {/* Center pin */}
-          <circle cx="70" cy="75" r="6" fill="#111827" />
-          <circle cx="70" cy="75" r="3" fill={color} />
+          <circle cx="65" cy="70" r="4" fill="#4A4A4A" />
+          <circle cx="65" cy="70" r="2" fill="#FFFFFF" />
         </svg>
       </div>
 
-      {/* Digital readout */}
-      <div className="bg-cream border-2 border-text px-3 py-1 shadow-retro-sm text-center">
-        <span className="font-mono text-xl font-bold tabular-nums" style={{ color }}>
-          {displayValue}
-        </span>
-        <span className="font-display text-xs text-text/50 ml-1">{unit}</span>
+      {/* Digital value */}
+      <div className="ae-inset px-4 py-1 text-center">
+        <span className="ae-value-sm">{value.toFixed(2)}</span>
+        <span className="ae-unit">{unit}</span>
       </div>
     </div>
   );
@@ -113,26 +89,22 @@ export default function VelocityGauges() {
   const { odometry } = useRos();
 
   return (
-    <div className="retro-panel h-full flex flex-col">
-      <div className="retro-panel-header">
-        <span>🏎️ Velocity</span>
+    <div className="ae-panel h-full flex flex-col">
+      <div className="ae-panel-header">
+        <span className="ae-panel-header-title">Velocity</span>
       </div>
-      <div className="retro-panel-body flex flex-col sm:flex-row items-center justify-around gap-4 flex-1">
-        <VintageGauge
+      <div className="ae-panel-body flex flex-col sm:flex-row items-center justify-around gap-5 flex-1">
+        <MinimalGauge
           label="Linear"
           value={odometry.linearVelocity.x}
           max={1.0}
           unit="m/s"
-          color="#3B82F6"
-          bgColor="#FFF8E7"
         />
-        <VintageGauge
+        <MinimalGauge
           label="Angular"
           value={odometry.angularVelocity.z}
           max={1.5}
           unit="rad/s"
-          color="#D97706"
-          bgColor="#FFF8E7"
         />
       </div>
     </div>

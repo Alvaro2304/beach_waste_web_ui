@@ -2,175 +2,130 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Macondo&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
-
-:root {
-  --primary: #3B82F6;
-  --secondary: #8B5CF6;
-  --success: #16A34A;
-  --warning: #D97706;
-  --danger: #DC2626;
-  --surface: #FFFFFF;
-  --text: #111827;
-}
+@import url('https://fonts.googleapis.com/css2?family=Macondo&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
 
 body {
-  color: var(--text);
-  background: #FFF8E7;
-  font-family: 'Macondo', cursive;
-  background-image:
-    radial-gradient(circle at 20px 20px, rgba(139,69,19,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
+  color: #2D2D2D;
+  background: #F5F3EF;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ═══════════════════════════════════════════════
-   RETRO PANEL SYSTEM
-   Vintage card with thick borders and hard shadows
-   ═══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   AESTHETIC PANEL SYSTEM
+   Soft surfaces, generous spacing, muted tones
+   ═══════════════════════════════════════════ */
 @layer components {
-  .retro-panel {
-    @apply bg-surface border-3 border-text rounded-none;
-    box-shadow: 4px 4px 0px 0px #111827;
+  .ae-panel {
+    @apply bg-surface rounded-panel;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
   }
 
-  .retro-panel-header {
-    @apply flex items-center justify-between
-           px-4 py-2 border-b-3 border-text
-           font-display text-lg tracking-wide;
-    background: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 4px,
-      rgba(59, 130, 246, 0.06) 4px,
-      rgba(59, 130, 246, 0.06) 8px
-    );
+  .ae-panel-header {
+    @apply flex items-center justify-between px-5 py-3
+           border-b border-border;
   }
 
-  .retro-panel-body {
-    @apply p-4;
+  .ae-panel-header-title {
+    @apply font-display text-lg text-text;
   }
 
-  /* Badge / chip */
-  .retro-badge {
+  .ae-panel-header-sub {
+    @apply font-mono text-[11px] text-text-muted tracking-wide;
+  }
+
+  .ae-panel-body {
+    @apply p-5;
+  }
+
+  /* Badge */
+  .ae-badge {
     @apply inline-flex items-center gap-1.5 px-3 py-1
-           font-display text-sm font-bold tracking-wide
-           border-2 border-text;
-    box-shadow: 2px 2px 0px 0px #111827;
+           rounded-badge font-body text-xs font-medium tracking-wide;
   }
 
-  .retro-badge-primary {
-    @apply bg-primary text-surface;
+  .ae-badge-ok {
+    @apply bg-status-ok/10 text-status-ok;
   }
 
-  .retro-badge-success {
-    @apply bg-success text-surface;
+  .ae-badge-warn {
+    @apply bg-status-warn/10 text-status-warn;
   }
 
-  .retro-badge-warning {
-    @apply bg-warning text-surface;
+  .ae-badge-err {
+    @apply bg-status-err/10 text-status-err;
   }
 
-  .retro-badge-danger {
-    @apply bg-danger text-surface;
+  .ae-badge-neutral {
+    @apply bg-border/50 text-text-secondary;
   }
 
   /* Gauge track */
-  .retro-gauge-track {
-    @apply h-5 bg-cream border-2 border-text overflow-hidden;
-    box-shadow: inset 2px 2px 0px 0px rgba(0,0,0,0.08);
+  .ae-track {
+    @apply h-2 rounded-full bg-border/60 overflow-hidden;
   }
 
-  .retro-gauge-fill {
-    @apply h-full transition-all duration-500 ease-out;
+  .ae-track-fill {
+    @apply h-full rounded-full transition-all duration-700 ease-out;
   }
 
-  /* Data values */
-  .retro-value {
-    @apply font-mono text-2xl font-bold tabular-nums;
+  /* Data labels */
+  .ae-label {
+    @apply font-body text-xs font-medium text-text-muted uppercase tracking-widest;
   }
 
-  .retro-label {
-    @apply font-display text-sm text-text/60 tracking-wide;
+  .ae-value {
+    @apply font-mono text-2xl font-semibold tabular-nums text-text;
   }
 
-  .retro-label-sm {
-    @apply font-display text-xs text-text/50 tracking-wide;
+  .ae-value-sm {
+    @apply font-mono text-base font-semibold tabular-nums text-text;
   }
 
-  /* Status indicator */
-  .retro-dot {
-    @apply w-3 h-3 rounded-full border-2 border-text;
+  .ae-unit {
+    @apply font-body text-[11px] text-text-muted ml-0.5;
   }
 
-  .retro-dot-ok {
-    @apply bg-success;
+  /* Status dot */
+  .ae-dot {
+    @apply w-2 h-2 rounded-full;
   }
 
-  .retro-dot-err {
-    @apply bg-danger animate-blink;
+  .ae-dot-ok {
+    @apply bg-status-ok animate-pulse-soft;
+  }
+
+  .ae-dot-err {
+    @apply bg-status-err animate-pulse-soft;
   }
 
   /* Button */
-  .retro-btn {
-    @apply font-display text-sm font-bold tracking-wide
-           px-4 py-2 border-3 border-text bg-surface
-           cursor-pointer select-none
-           active:translate-x-0.5 active:translate-y-0.5
-           active:shadow-none transition-all;
-    box-shadow: 3px 3px 0px 0px #111827;
+  .ae-btn {
+    @apply font-body text-sm font-medium tracking-wide
+           px-4 py-2 rounded-widget border border-border
+           bg-surface text-text cursor-pointer select-none
+           transition-all duration-200
+           hover:shadow-panel-hover hover:border-border-strong
+           active:scale-[0.98];
   }
 
-  .retro-btn:hover {
-    @apply bg-cream;
+  .ae-btn-filled {
+    @apply bg-accent text-text-inverse border-accent
+           hover:bg-accent/90;
   }
 
-  .retro-btn-primary {
-    @apply bg-primary text-surface;
-  }
-
-  .retro-btn-primary:hover {
-    @apply bg-primary/90;
+  /* Inset data box */
+  .ae-inset {
+    @apply bg-surface-alt rounded-widget px-3 py-2;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
   }
 }
 
-/* ═══════════════════════════════════════════════
-   VINTAGE DECORATIONS
-   ═══════════════════════════════════════════════ */
+/* Scrollbar — minimal and quiet */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D1CCC4; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9B9B9B; }
 
-/* Dashed separator with vintage flair */
-.retro-divider {
-  border: none;
-  border-top: 2px dashed #111827;
-  opacity: 0.2;
-  margin: 16px 0;
-}
-
-/* Vintage dot-matrix text effect for numeric data */
-.dot-matrix {
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.1em;
-}
-
-/* Scrollbar - keep it chunky and retro */
-::-webkit-scrollbar {
-  width: 12px;
-}
-
-::-webkit-scrollbar-track {
-  background: #FFF8E7;
-  border-left: 2px solid #111827;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #111827;
-  border: 2px solid #FFF8E7;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #3B82F6;
-}
-
-/* Override Leaflet popups to match retro style */
-.leaflet-container {
-  font-family: 'Macondo', cursive !important;
-}
+/* Leaflet overrides */
+.leaflet-container { font-family: 'DM Sans', system-ui, sans-serif !important; }

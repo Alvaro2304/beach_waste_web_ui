@@ -21,14 +21,14 @@ export default function TeleopPad() {
         zone: padRef.current,
         mode: "static",
         position: { left: "50%", top: "50%" },
-        color: "#3B82F6",
-        size: 120,
+        color: "#9B9B9B",
+        size: 110,
       });
 
       manager.on("move", (_, data) => {
         const maxLinear = 0.5;
         const maxAngular = 1.0;
-        const distance = Math.min(data.distance / 60, 1);
+        const distance = Math.min(data.distance / 55, 1);
         const angle = data.angle?.radian ?? 0;
 
         const lin = Math.cos(angle - Math.PI / 2) * distance * maxLinear * -1;
@@ -61,64 +61,55 @@ export default function TeleopPad() {
   }, [disabled, sendCmdVel]);
 
   return (
-    <div className="retro-panel h-full flex flex-col">
-      <div className="retro-panel-header">
-        <span>🕹️ Teleop Control</span>
-        <span
-          className={`retro-badge text-xs ${
-            disabled ? "retro-badge-danger" : "retro-badge-success"
-          }`}
-        >
-          {disabled ? "LOCKED" : "ACTIVE"}
+    <div className="ae-panel h-full flex flex-col">
+      <div className="ae-panel-header">
+        <span className="ae-panel-header-title">Teleop</span>
+        <span className={`ae-badge ${disabled ? "ae-badge-err" : "ae-badge-ok"}`}>
+          {disabled ? "Locked" : "Active"}
         </span>
       </div>
-      <div className="retro-panel-body flex flex-col items-center gap-4 flex-1">
-        {/* Joystick area */}
+      <div className="ae-panel-body flex flex-col items-center gap-4 flex-1">
+        {/* Joystick zone */}
         <div
           ref={padRef}
-          className={`relative w-[160px] h-[160px] border-3 rounded-full ${
+          className={`relative w-[150px] h-[150px] rounded-full border transition-colors ${
             disabled
-              ? "border-text/20 bg-cream/50"
-              : "border-text bg-cream"
+              ? "border-border bg-surface-alt opacity-40"
+              : "border-border-strong bg-surface-alt"
           }`}
-          style={{
-            touchAction: "none",
-            boxShadow: disabled ? "none" : "inset 2px 2px 0px rgba(0,0,0,0.08)",
-          }}
+          style={{ touchAction: "none" }}
         >
           {disabled && (
             <div className="absolute inset-0 flex items-center justify-center z-10">
-              <span className="font-display text-sm text-danger/60 font-bold">
-                Auto Mode
-              </span>
+              <span className="font-body text-xs text-text-muted">Auto mode</span>
             </div>
           )}
-          {/* Crosshair marks */}
+          {/* Crosshair */}
           {!disabled && (
             <>
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-text/20" />
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-0.5 h-4 bg-text/20" />
-              <div className="absolute left-2 top-1/2 -translate-y-1/2 w-4 h-0.5 bg-text/20" />
-              <div className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-0.5 bg-text/20" />
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 w-px h-3 bg-border-strong" />
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-px h-3 bg-border-strong" />
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 w-3 h-px bg-border-strong" />
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 w-3 h-px bg-border-strong" />
             </>
           )}
         </div>
 
         {/* Velocity readouts */}
-        <div className="grid grid-cols-2 gap-4 w-full">
-          <div className="text-center bg-cream border-2 border-text p-2 shadow-retro-sm">
-            <div className="retro-label-sm">Linear</div>
-            <div className="font-mono text-xl font-bold text-primary tabular-nums">
+        <div className="grid grid-cols-2 gap-3 w-full">
+          <div className="ae-inset text-center">
+            <div className="ae-label text-[10px]">Linear</div>
+            <div className="font-mono text-lg font-semibold text-text tabular-nums">
               {linearVel.toFixed(2)}
             </div>
-            <div className="font-mono text-[10px] text-text/40">m/s</div>
+            <div className="ae-unit">m/s</div>
           </div>
-          <div className="text-center bg-cream border-2 border-text p-2 shadow-retro-sm">
-            <div className="retro-label-sm">Angular</div>
-            <div className="font-mono text-xl font-bold text-warning tabular-nums">
+          <div className="ae-inset text-center">
+            <div className="ae-label text-[10px]">Angular</div>
+            <div className="font-mono text-lg font-semibold text-text tabular-nums">
               {angularVel.toFixed(2)}
             </div>
-            <div className="font-mono text-[10px] text-text/40">rad/s</div>
+            <div className="ae-unit">rad/s</div>
           </div>
         </div>
       </div>

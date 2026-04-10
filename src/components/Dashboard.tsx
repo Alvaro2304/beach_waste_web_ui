@@ -14,13 +14,11 @@ const MapPanel = dynamic(() => import("./panels/MapPanel"), { ssr: false });
 
 export default function Dashboard() {
   return (
-    <div className="min-h-screen flex flex-col gap-4 p-4 max-w-[1920px] mx-auto">
-      {/* Top Bar */}
+    <div className="min-h-screen flex flex-col gap-5 p-5 lg:p-6 max-w-[1920px] mx-auto">
       <TopBar />
 
-      {/* Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1">
-        {/* Row 1: Camera (8 cols) + Map (4 cols) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 flex-1">
+        {/* Row 1 */}
         <div className="lg:col-span-8">
           <CameraFeed />
         </div>
@@ -28,7 +26,7 @@ export default function Dashboard() {
           <MapPanel />
         </div>
 
-        {/* Row 2: Teleop (3) + Velocity (3) + Battery (2) + Temp (2) + System (2) */}
+        {/* Row 2 */}
         <div className="lg:col-span-3">
           <TeleopPad />
         </div>
@@ -46,7 +44,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

@@ -15,35 +15,35 @@ export default function Footer() {
   const { uptime, imuHz, gpsHz } = useRos();
 
   return (
-    <footer className="retro-panel px-4 py-2 flex items-center justify-between gap-6 flex-wrap">
+    <footer className="ae-panel px-6 py-3 flex items-center justify-between gap-6 flex-wrap">
       {/* Uptime */}
       <div className="flex items-center gap-2">
-        <span className="font-display text-sm text-text/60">⏱ Uptime</span>
-        <span className="font-mono text-base font-bold text-text tabular-nums tracking-wider bg-cream border-2 border-text px-2 py-0.5 shadow-retro-sm">
+        <span className="font-body text-xs text-text-muted">Uptime</span>
+        <span className="ae-inset font-mono text-sm font-medium text-text tabular-nums px-3 py-0.5">
           {formatUptime(uptime)}
         </span>
       </div>
 
       {/* Message rates */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-5">
         <div className="flex items-center gap-1.5">
-          <div className="retro-dot retro-dot-ok" />
-          <span className="font-display text-sm text-text/60">IMU</span>
-          <span className="font-mono text-sm font-bold text-primary tabular-nums">
+          <div className="ae-dot ae-dot-ok" />
+          <span className="font-body text-xs text-text-muted">IMU</span>
+          <span className="font-mono text-xs font-medium text-text tabular-nums">
             {imuHz} Hz
           </span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="retro-dot retro-dot-ok" />
-          <span className="font-display text-sm text-text/60">GPS</span>
-          <span className="font-mono text-sm font-bold text-success tabular-nums">
+          <div className="ae-dot ae-dot-ok" />
+          <span className="font-body text-xs text-text-muted">GPS</span>
+          <span className="font-mono text-xs font-medium text-text tabular-nums">
             {gpsHz} Hz
           </span>
         </div>
       </div>
 
       {/* Version */}
-      <span className="font-display text-xs text-text/30">
+      <span className="font-body text-[11px] text-text-muted">
         Beach Sentinel v0.1.0
       </span>
     </footer>

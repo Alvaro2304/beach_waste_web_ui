@@ -15,9 +15,9 @@ export default function TopBar() {
       setDate(
         now.toLocaleDateString("en-US", {
           weekday: "short",
-          year: "numeric",
           month: "short",
           day: "numeric",
+          year: "numeric",
         })
       );
     };
@@ -27,56 +27,57 @@ export default function TopBar() {
   }, []);
 
   return (
-    <header className="retro-panel flex items-center justify-between px-4 py-3 gap-6 flex-wrap">
-      {/* Logo / Name */}
-      <div className="flex items-center gap-3">
-        <div className="w-12 h-12 border-3 border-text bg-primary flex items-center justify-center shadow-retro-sm">
-          <span className="text-2xl">🏖️</span>
+    <header className="ae-panel flex items-center justify-between px-6 py-4 gap-6 flex-wrap">
+      {/* Identity */}
+      <div className="flex items-center gap-4">
+        <div className="w-10 h-10 rounded-widget bg-accent/8 flex items-center justify-center">
+          <span className="font-display text-xl text-accent-warm">BS</span>
         </div>
         <div>
-          <h1 className="font-display text-2xl text-text leading-tight">
+          <h1 className="font-display text-xl text-text leading-tight">
             Beach Sentinel
           </h1>
-          <span className="font-display text-xs text-text/50 tracking-wider">
-            Coastal Cleanup Unit — Mission Control
-          </span>
+          <p className="font-body text-[11px] text-text-muted tracking-wider">
+            Coastal Cleanup — Mission Control
+          </p>
         </div>
       </div>
 
-      {/* Date / Time */}
-      <div className="hidden sm:flex flex-col items-center bg-cream border-2 border-text px-4 py-1 shadow-retro-sm">
-        <span className="font-mono text-xl font-bold text-text tabular-nums tracking-wider">
+      {/* Clock */}
+      <div className="hidden sm:flex flex-col items-center">
+        <span className="font-mono text-lg font-semibold text-text tabular-nums">
           {time}
         </span>
-        <span className="font-display text-xs text-text/50">
-          {date}
-        </span>
+        <span className="font-body text-[11px] text-text-muted">{date}</span>
       </div>
 
-      {/* Connection Status */}
-      <div className="flex items-center gap-2 bg-cream border-2 border-text px-3 py-1.5 shadow-retro-sm">
+      {/* Connection */}
+      <div className="flex items-center gap-2">
         <div
-          className={`retro-dot ${
-            connectionStatus === "connected" ? "retro-dot-ok" : "retro-dot-err"
+          className={`ae-dot ${
+            connectionStatus === "connected" ? "ae-dot-ok" : "ae-dot-err"
           }`}
         />
-        <span className="font-display text-sm font-bold">
-          {connectionStatus === "connected" ? "Link OK" : "No Link"}
+        <span className="font-body text-sm text-text-secondary">
+          {connectionStatus === "connected" ? "Connected" : "Offline"}
         </span>
       </div>
 
-      {/* Mode Toggle */}
+      {/* Mode toggle */}
       <button
         onClick={() =>
           setOperationMode(operationMode === "auto" ? "manual" : "auto")
         }
-        className={`retro-btn font-display text-base tracking-wide ${
-          operationMode === "auto"
-            ? "bg-success text-surface"
-            : "bg-warning text-surface"
+        className={`ae-badge cursor-pointer transition-colors ${
+          operationMode === "auto" ? "ae-badge-ok" : "ae-badge-warn"
         }`}
       >
-        ⚙ {operationMode === "auto" ? "AUTO" : "MANUAL"}
+        <span
+          className={`w-1.5 h-1.5 rounded-full ${
+            operationMode === "auto" ? "bg-status-ok" : "bg-status-warn"
+          }`}
+        />
+        {operationMode === "auto" ? "Autonomous" : "Manual"}
       </button>
     </header>
   );
