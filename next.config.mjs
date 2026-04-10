@@ -1,12 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
+  basePath: "/beach_waste_web_ui",
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "unpkg.com",
-      },
-    ],
+    unoptimized: true,
   },
 };
 
