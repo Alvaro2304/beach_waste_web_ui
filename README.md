@@ -4,6 +4,16 @@ Web-based dashboard for remote monitoring and control of the Beach Sentinel
 coastal cleanup robot. Connects to the robot's ROS 2 stack via rosbridge
 WebSocket and renders real-time telemetry in the browser.
 
+## Preview
+
+### Retro Fun (`main` / `retro-fun`)
+
+![Retro Fun Dashboard](public/images/readme/dashboard-retro-fun.png)
+
+### Retro Aesthetic (`retro-aesthetic`)
+
+![Retro Aesthetic Dashboard](public/images/readme/dashboard-retro-aesthetic.png)
+
 ## Architecture
 
 ```
